@@ -1,32 +1,71 @@
+#include <iostream>
+#include <fstream>
+#include <cstring>
+
 #include "Memory.h"
 
-#include <string>
-#include <cstdint>
 
-Memory::Memory()
-{
-	capacity = 2;
-	type = "DDR3";
-	power_usage = 300;
-	manufacturer = "Hynix";
+Memory::Memory(const char* manufacturer, int capacity, const char* type, const char* name) : capacity(capacity) {
+	strcpy_s(this->manufacturer, MAX_LENGTH, manufacturer);
+	strcpy_s(this->type, MAX_LENGTH, type);
+	strcpy_s(this->name, MAX_LENGTH, name);
 }
 
-int Memory::get_capacity()
-{
-	return capacity;
+Memory::Memory(const char* filename) {
+    load(filename);
 }
 
-std::string Memory::get_manufacturer()
+void Memory::set_capacity(int a)
+{
+    capacity = a;
+}
+
+char* Memory::get_manufacturer()
 {
 	return manufacturer;
 }
 
-std::string Memory::get_type()
+char* Memory::get_type()
 {
 	return type;
 }
 
-int Memory::get_power_usage()
+char* Memory::get_name()
 {
-	return power_usage;
+	return name;
+}
+
+void Memory::save(const char* filename) {
+    std::ofstream fout(filename);
+    fout
+        << classname << " "
+        << manufacturer << " "
+        << capacity << " "
+        << type << " "
+        << name << std::endl;
+    fout.close();
+}
+
+
+void Memory::load(const char* filename) {
+    std::ifstream fin(filename);
+    fin >> classname >> name >> capacity >> type >> manufacturer;
+    fin.close();
+}
+
+
+std::ostream& operator<<(std::ostream& ostream, const Memory& memory) {
+    ostream
+        << memory.classname << " " << memory.name << " ("
+        << "capacity = " << memory.capacity
+        << ", type = " << memory.type << " "
+        << ", manufacturer = " << memory.manufacturer << ")"<<std::endl;
+
+    return ostream;
+}
+
+
+Memory::~Memory()
+{
+	//dtor
 }

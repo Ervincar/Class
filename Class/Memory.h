@@ -1,19 +1,31 @@
 #pragma once
 
-#include <string>
+#include <cstdint>
+#include <ostream>
+
+const size_t MAX_LENGTH = 100;
 
 class Memory
 {
-	private:
-		std::string manufacturer;
-		int capacity;
-		std::string type;
-		int power_usage;
+private:
+	char manufacturer[MAX_LENGTH] = "Hynix";
+	char classname[MAX_LENGTH] = "Memory";
+	int capacity = 1;
+	char type[MAX_LENGTH] = "DDR4";
+	char name[MAX_LENGTH] = "HyperX Fury 8GB";
 
-	public:
-		Memory();
-		std::string get_manufacturer();
-		int get_capacity();
-		std::string get_type();
-		int get_power_usage();
+public:
+	Memory(const char*, int, const char*, const char*);
+	Memory(const char*);
+	char* get_manufacturer();
+	void set_capacity(int);
+	char* get_type();
+	char* get_name();
+	virtual ~Memory();
+
+	void save(const char*);
+	void load(const char*);
+
+	friend std::ostream& operator<<(std::ostream&, const Memory&);
 };
+
