@@ -36,7 +36,7 @@ char* Memory::get_name()
 }
 
 void Memory::save(const char* filename) {
-    std::ofstream fout(filename);
+    std::ofstream fout(filename, std::ios::app);
     fout
         << classname << " "
         << manufacturer << " "
