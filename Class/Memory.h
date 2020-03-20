@@ -17,6 +17,7 @@ private:
 public:
 	Memory(const char*, int, const char*, const char*);
 	Memory(const char*);
+	void print();
 	char* get_manufacturer();
 	void set_capacity(int);
 	char* get_type();
